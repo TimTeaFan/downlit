@@ -115,11 +115,14 @@ token_type <- function(x, text) {
     "SPECIAL", "LT", "GT", "EQ", "GE", "LE", "AND", "AND2", "OR",
     "OR2", "LEFT_ASSIGN", "RIGHT_ASSIGN", "'$'", "'@'", "EQ_ASSIGN"
   )
+  magic <- c("library", "function", "UseMethod")
 
   x[x %in% special] <- "special"
   x[x %in% infix] <- "infix"
 
   x[x == "NUM_CONST" & text %in% c("TRUE", "FALSE")] <- "logical"
+  x[x %in% c("SYMBOL_FUNCTION_CALL", "FUNCTION") & text %in% magic] <- "magic"
+  x[x == "COMMENT" & grepl("^#>", text)] <- "TIDY_OUTPUT"
 
   x
 }
@@ -157,15 +160,17 @@ classes_chroma <- function() {
     "logical" = "kc",
     "NUM_CONST" = "m",
     "STR_CONST" = "s",
-    "NULL_CONST" = "kr",
+    "NULL_CONST" = "l",
     "FUNCTION" = "nf",
     "special" = "kr",
+    "magic" = "fm",
     "infix" = "o",
     "SYMBOL" = "k",
     "SYMBOL_FUNCTION_CALL" = "nf",
     "SYMBOL_PACKAGE" = "k",
     "SYMBOL_FORMALS" = "k",
-    "COMMENT" = "c"
+    "COMMENT" = "c",
+    "TIDY_OUTPUT" = "go"
   )
 }
 
