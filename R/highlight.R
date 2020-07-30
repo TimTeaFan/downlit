@@ -122,7 +122,7 @@ token_type <- function(x, text) {
 
   x[x == "NUM_CONST" & text %in% c("TRUE", "FALSE")] <- "logical"
   x[x %in% c("SYMBOL_FUNCTION_CALL", "FUNCTION") & text %in% magic] <- "magic"
-  x[x == "COMMENT" & grepl("^#>", text)] <- "TIDY_OUTPUT"
+  x[x == "COMMENT" & parent == 0 & grepl("^#>", text)] <- "TIDY_OUTPUT"
 
   x
 }
