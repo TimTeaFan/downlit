@@ -115,7 +115,13 @@ token_type <- function(x, text, parent) {
     "SPECIAL", "LT", "GT", "EQ", "GE", "LE", "AND", "AND2", "OR",
     "OR2", "LEFT_ASSIGN", "RIGHT_ASSIGN", "'$'", "'@'", "EQ_ASSIGN"
   )
-  magic <- c("library", "require", "function", "UseMethod")
+
+# from https://github.com/rstudio/rstudio/blob/2ef02203a1ffbea96c9c47bc80fbf07b063907d3/src/gwt/acesupport/acemode/r_highlight_rules.js#L191
+  magic <- c("return", "switch", "try", "tryCatch", "stop",
+             "warning", "require", "library", "attach", "detach",
+             "source", "setMethod", "setGeneric", "setGroupGeneric",
+             "setClass", "setRefClass", "R6Class", "UseMethod", "NextMethod")
+
 
   x[x %in% special] <- "special"
   x[x %in% infix] <- "infix"
