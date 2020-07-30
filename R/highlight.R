@@ -115,7 +115,7 @@ token_type <- function(x, text, parent) {
     "SPECIAL", "LT", "GT", "EQ", "GE", "LE", "AND", "AND2", "OR",
     "OR2", "LEFT_ASSIGN", "RIGHT_ASSIGN", "'$'", "'@'", "EQ_ASSIGN"
   )
-  magic <- c("library", "function", "UseMethod")
+  magic <- c("library", "require", "function", "UseMethod")
 
   x[x %in% special] <- "special"
   x[x %in% infix] <- "infix"
