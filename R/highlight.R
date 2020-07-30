@@ -31,7 +31,7 @@ highlight <- function(text, classes = classes_chroma(), pre_class = NULL) {
 
   # Highlight, link, and escape
   out <- parsed$data
-  out$class <- token_class(out$token, out$text, classes)
+  out$class <- token_class(out$token, out$text, out$parent, classes)
   out$href <- token_href(out$token, out$text)
   out$escaped <- token_escape(out$token, out$text)
 
@@ -100,15 +100,15 @@ parse_data <- function(text) {
 
 # Highlighting ------------------------------------------------------------
 
-token_class <- function(token, text, classes) {
-  token <- token_type(token, text)
+token_class <- function(token, text, parent, classes) {
+  token <- token_type(token, text, parent)
   unname(classes[token])
 }
 
 # Collapse token types to a smaller set of categories that we care about
 # for syntax highlighting
 # https://github.com/wch/r-source/blob/trunk/src/main/gram.c#L511
-token_type <- function(x, text) {
+token_type <- function(x, text, parent) {
   special <- c("IF", "ELSE", "REPEAT", "WHILE", "FOR", "IN", "NEXT", "BREAK")
   infix <- c(
     "'-'", "'+'", "'!'", "'~'", "'?'", "':'", "'*'", "'/'", "'^'", "'~'",
